@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Button;
 
+
 public class SoftActivity extends AppCompatActivity {
     private Button buttonCamera;
-
+    private TestGridView gridview;
+    public static SoftActivity self;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -15,8 +17,9 @@ public class SoftActivity extends AppCompatActivity {
 
 
     }
-   private void create(){
-
+   public void createX(){
+       gridview = (TestGridView) findViewById(R.id.gridview);
+       gridview.setAdapter(new TestGridViewAdapter(this));
    }
 
 }
