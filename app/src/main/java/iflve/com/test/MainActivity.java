@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private Intent bill;
     private Intent me;
     private RadioGroup rg;
-    private TestGridView gridview;
+
     private ListView lv;
 
     @Override
@@ -37,8 +37,7 @@ public class MainActivity extends AppCompatActivity {
         th.getTabWidget().setBackgroundColor(Color.parseColor("#eeeeee"));
 
         th.addTab(th.newTabSpec("tab1").setIndicator("美银软件").setContent(R.id.linearLayout1));
-        gridview = (TestGridView) findViewById(R.id.gridview);
-        gridview.setAdapter(new TestGridViewAdapter(this));
+
 
 
         th.addTab(th.newTabSpec("tab3").setIndicator("美银钱包")
@@ -50,12 +49,17 @@ public class MainActivity extends AppCompatActivity {
         th.addTab(th.newTabSpec("tab2").setIndicator("个人中心")
                 .setContent(R.id.linearLayout4));
         th.setCurrentTab(0);
+
         th.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
                 for (int i = 0; i < th.getTabWidget().getChildCount(); i++) {
                     TextView tv = (TextView) th.getTabWidget().getChildAt(i).findViewById(android.R.id.title); //Unselected Tabs
                     tv.setTextColor(Color.parseColor("#999999"));
+                    if( tabId.equals("tab1") ){
+                        SoftActivity.self.createX();
+                    }
+
                 }
                 TextView tv = (TextView) th.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
                 tv.setTextColor(Color.parseColor("#33b5e5"));
