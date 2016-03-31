@@ -7,6 +7,7 @@ public class MeActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        this.getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_me);
     }

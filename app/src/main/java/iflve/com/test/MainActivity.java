@@ -1,8 +1,12 @@
 package iflve.com.test;
 
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -19,47 +23,27 @@ public class MainActivity extends AppCompatActivity {
     private Intent bill;
     private Intent me;
     private RadioGroup rg;
-
     private ListView lv;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        soft = new Intent(MainActivity.this, SoftActivity.class);
-        money = new Intent(MainActivity.this, MoneyActivity.class);
-        bill = new Intent(MainActivity.this, BillActivity.class);
-        me = new Intent(MainActivity.this, MeActivity.class);
         setContentView(R.layout.activity_main);
-        Log.i("sb", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        LocalActivityManager localActivityManager = new LocalActivityManager(this, true);
+        localActivityManager.dispatchCreate(savedInstanceState);
         th = (TabHost) findViewById(R.id.tabHost);
-        th.setup();
-
+        th.setup(localActivityManager);
         th.getTabWidget().setBackgroundColor(Color.parseColor("#eeeeee"));
-
-        th.addTab(th.newTabSpec("tab1").setIndicator("美银软件").setContent(R.id.linearLayout1));
-
-
-
-        th.addTab(th.newTabSpec("tab3").setIndicator("美银钱包")
-                .setContent(R.id.linearLayout2));
-
-
-        th.addTab(th.newTabSpec("tab2").setIndicator("我的账单")
-                .setContent(R.id.linearLayout3));
-        th.addTab(th.newTabSpec("tab2").setIndicator("个人中心")
-                .setContent(R.id.linearLayout4));
+        th.addTab(th.newTabSpec("tab1").setIndicator("美银软件").setContent(new Intent(this,SoftActivity.class)));
+        th.addTab(th.newTabSpec("tab2").setIndicator("美银钱包").setContent(new Intent(this,MoneyActivity.class)));
+        th.addTab(th.newTabSpec("tab3").setIndicator("我的账单").setContent(new Intent(this,BillActivity.class)));
+        th.addTab(th.newTabSpec("tab4").setIndicator("个人中心").setContent(new Intent(this,MeActivity.class)));
         th.setCurrentTab(0);
-
         th.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
                 for (int i = 0; i < th.getTabWidget().getChildCount(); i++) {
                     TextView tv = (TextView) th.getTabWidget().getChildAt(i).findViewById(android.R.id.title); //Unselected Tabs
                     tv.setTextColor(Color.parseColor("#999999"));
-                    if( tabId.equals("tab1") ){
-                        SoftActivity.self.createX();
-                    }
-
                 }
                 TextView tv = (TextView) th.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
                 tv.setTextColor(Color.parseColor("#33b5e5"));
@@ -93,6 +77,11 @@ public class MainActivity extends AppCompatActivity {
         }
         tv = (TextView) th.getCurrentTabView().findViewById(android.R.id.title); //for Selected Tab
         tv.setTextColor(Color.parseColor("#33b5e5"));
+    }
+
+    @Override
+    public FragmentManager getSupportFragmentManager() {
+        return super.getSupportFragmentManager();
     }
 }
 
