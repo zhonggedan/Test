@@ -1,6 +1,5 @@
 package iflve.com.test;
 
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import org.ksoap2.serialization.SoapObject;
-
 
 public class SoftActivity extends AppCompatActivity {
     private Button buttonCamera;
