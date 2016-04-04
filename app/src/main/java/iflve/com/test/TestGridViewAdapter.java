@@ -18,7 +18,7 @@ public class TestGridViewAdapter extends BaseAdapter {
     public int[] imgs = {R.drawable.android, R.drawable.apple,
             R.drawable.weixin, R.drawable.taobao,
             R.drawable.zhifubao, R.drawable.huichao,
-            R.drawable.guofubao, R.drawable.lianlian, R.drawable.windows, R.drawable.wangzhanjianshe, R.drawable.lianaxiwm};
+            R.drawable.guofubao, R.drawable.lianlian, R.drawable.windows, R.drawable.wangzhanjianshe, R.drawable.lianxiwm};
     private Context mContext;
 
     public TestGridViewAdapter(Context mContext) {
@@ -52,6 +52,8 @@ public class TestGridViewAdapter extends BaseAdapter {
         }
         TextView tv = BaseViewHolder.get(convertView, R.id.tv_item);
         ImageView iv = BaseViewHolder.get(convertView, R.id.iv_item);
+
+
         iv.setBackgroundResource(imgs[position]);
 
         tv.setText(img_text[position]);
