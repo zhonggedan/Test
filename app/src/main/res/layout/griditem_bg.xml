@@ -6,7 +6,6 @@
     android:background="#ffffff">
 
     <RelativeLayout
-        android:id="@+id/asdasd"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_centerInParent="true"
@@ -15,8 +14,8 @@
 
         <ImageView
             android:id="@+id/iv_item"
-            android:layout_width="58.0dip"
-            android:layout_height="58.0dip"
+            android:layout_width="32dip"
+            android:layout_height="32dip"
             android:layout_centerHorizontal="true"
             android:contentDescription="@string/app_name" />
 
