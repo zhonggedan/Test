@@ -2,8 +2,10 @@ package iflve.com.test;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.app.LocalActivityManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -12,11 +14,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TabHost;
@@ -38,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
         localActivityManager = new LocalActivityManager(this, true);
         localActivityManager.dispatchCreate(savedInstanceState);
@@ -90,10 +96,6 @@ public class MainActivity extends AppCompatActivity {
          }
      });
     }
-
-
-
-
     private void initViewPage(){
        //viewPage
         lvm = new ArrayList<View>();
@@ -105,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
         viewPage.setAdapter(myPageAdapter);
         viewPage.setCurrentItem(0);
     }
-
     public View getView(Context parent, Intent intent) {
 
         final Window w = localActivityManager.startActivity(
@@ -113,9 +114,6 @@ public class MainActivity extends AppCompatActivity {
         final View wd = w != null ? w.getDecorView() : null;
         return wd ;
     }
-
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem mi1 = menu.add(1, Menu.FIRST + 1, 1, "搜索");
@@ -128,8 +126,6 @@ public class MainActivity extends AppCompatActivity {
         menu.add(2, Menu.FIRST + 4, 1, "退出");
         return super.onCreateOptionsMenu(menu);
     }
-
-
     private void change(){
         for (int i = 0; i < 3; i++) {
             TextView tv = (TextView) th.getTabWidget().getChildAt(i).findViewById(android.R.id.title);
@@ -138,8 +134,6 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = (TextView) th.getCurrentTabView().findViewById(android.R.id.title);
         tv.setTextColor(Color.parseColor("#33b5e5"));
     }
-
-
     class MyPageAdapter extends PagerAdapter{
         public List<View> mListViews;
 
@@ -186,8 +180,38 @@ public class MainActivity extends AppCompatActivity {
         public void startUpdate(View arg0) {
         }
     }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if( keyCode ==KeyEvent.KEYCODE_BACK ) {
+            AlertDialog dialog02 = new AlertDialog.Builder(MainActivity.this)
+                    .setIcon(android.R.drawable.ic_dialog_info)
+                    .setTitle("退出登录")
+                    .setMessage("确认要登录吗？")
+                    .setPositiveButton("确认", new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    System.exit(0);
+
+                                }
+                            }
+                    )
+                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                }
+                            }
+                    ).create();
+            dialog02.show();
 
 
+            return true;
+        }
+        return false;
+    }
 }
 
 

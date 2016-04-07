@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import org.ksoap2.serialization.SoapObject;
 
+
 public class SoftActivity extends AppCompatActivity {
     private Button buttonCamera;
     private TestGridView gridview;
@@ -26,14 +27,7 @@ public class SoftActivity extends AppCompatActivity {
 
                 switch (position) {
                     case 0:
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                LoginService xx = new LoginService("sdd");
-                               // Log.i("sbsb", "cccssss");
-                              //  Log.i("sbsb", xx.LoadResult().getProperty(0).toString());
-                            }
-                        }).start();
+
                         Log.i("sbsb","1111111111111111");
                         break;
                     case 1:

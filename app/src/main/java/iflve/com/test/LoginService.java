@@ -14,33 +14,33 @@ import java.io.IOException;
  * Created by admin on 2016/4/4.
  */
 
-
 public class LoginService implements ISoapService  {
 
     private static final String NameSpace = "http://tempuri.org/";
-    private static final String URL = "http://www.iflve.com/User.svc?wsdl";
-    private static final String SOAP_ACTION = "http://www.iflve.com/User.svc/DoWork";
-    private static final String MethodName = "DoWork";
-
-    private String words;
-    LoginService(String words) {
-        this.words = words;
+    //private static final String URL = "http://www.iflve.com/Service1.svc?wsdl";
+    private static final String URL = "http://www.iflve.com/LoginService.svc?wsdl";
+    private static final String SOAP_ACTION = "http://tempuri.org/ILoginService/Login";
+    private static final String MethodName = "Login";
+    private String username;
+    private String password;
+    public LoginService(String username,String password) {
+        this.password = password;
+        this.username = username;
     }
 
     @Override
     public SoapObject LoadResult() {
         SoapObject soapObject = new SoapObject(NameSpace, MethodName);
-        Log.i("sbsb", soapObject.getName());
-        soapObject.addProperty("words", words);
+        soapObject.addProperty("us", username);
+        soapObject.addProperty("ps", password);
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11); // 版本
         envelope.bodyOut = soapObject;
         envelope.dotNet = true;
         envelope.setOutputSoapObject(soapObject);
-
         HttpTransportSE trans = new HttpTransportSE(URL);
         trans.debug = true; // 使用调试功能
-        try {
 
+        try {
             trans.call(SOAP_ACTION, envelope);
             //System.out.println("Call Successful!");
         } catch (IOException e) {
@@ -50,10 +50,8 @@ public class LoginService implements ISoapService  {
             System.out.println("XmlPullParserException");
             e.printStackTrace();
         }
-
         SoapObject result = (SoapObject) envelope.bodyIn;
-
+       // SoapObject result = (SoapObject) envelope.getResponse();
         return result;
-
     }
 }
